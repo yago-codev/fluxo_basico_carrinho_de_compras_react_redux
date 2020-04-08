@@ -1,0 +1,66 @@
+{
+  "stock": [
+    {
+      "id": 1,
+      "amount": 3
+    },
+    {
+      "id": 2,
+      "amount": 5
+    },
+    {
+      "id": 3,
+      "amount": 2
+    },
+    {
+      "id": 4,
+      "amount": 1
+    },
+    {
+      "id": 5,
+      "amount": 5
+    },
+    {
+      "id": 6,
+      "amount": 10
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "title": "Tênis de Caminhada Leve Confortável",
+      "price": 179.9,
+      "image": "https://imageswscdn.wslojas.com.br/files/20717/MED_nike-kyrie-5-patrick-175972.png"
+    },
+    {
+      "id": 2,
+      "title": "Tênis de Caminhada Leve Confortável",
+      "price": 139.9,
+      "image": "https://imageswscdn.wslojas.com.br/files/20717/MED_nike-kyrie-5-bob-esponja-844063.png"
+    },
+    {
+      "id": 3,
+      "title": "Tênis de Caminhada Leve Confortável",
+      "price": 219.9,
+      "image": "https://i.pinimg.com/originals/c7/54/0c/c7540c25352b679165f45c02a80b6ffd.png"
+    },
+    {
+      "id": 4,
+      "title": "Tênis de Caminhada Leve Confortável",
+      "price": 179.9,
+      "image": "https://www.pngkey.com/png/full/818-8182864_nike-kyrie-5-chinese-new-year-nike-mens.png"
+    },
+    {
+      "id": 5,
+      "title": "Tênis de Caminhada Leve Confortável",
+      "price": 139.9,
+      "image": "https://image.goat.com/750/attachments/product_template_pictures/images/024/658/977/original/533272_00.png.png"
+    },
+    {
+      "id": 6,
+      "title": "Tênis de Caminhada Leve Confortável",
+      "price": 219.9,
+      "image": "https://image.goat.com/crop/750/attachments/product_template_pictures/images/033/255/567/original/579828_00.png.png"
+    }
+  ]
+}
