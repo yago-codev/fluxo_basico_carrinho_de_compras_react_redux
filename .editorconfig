@@ -1,0 +1,7 @@
+[*]
+end_of_line = lf #força que os finais das linhas estejam no padrão UNIX
+indent_style = space
+indent_size = 2
+charset = utf-8
+trim_trailing_whitespace = true #inserir ponto e vírgula no final das sentenças de código
+insert_final_newline = true #inserir linha em branco abaixo da última sentença de código escrita
