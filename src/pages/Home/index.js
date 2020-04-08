@@ -1,112 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
+
+import { formatPrice } from '../../util/format';
+import api from '../../services/api';
 
 import { ProductList } from './styles';
 
-export default function Home() {
-  return (
-    <ProductList>
-      <li>
-        <img
-          src="https://imageswscdn.wslojas.com.br/files/20717/MED_nike-kyrie-5-patrick-175972.png"
-          alt="Tênis"
-        />
-        <strong>Tênis</strong>
-        <span>R$129,90</span>
+export default class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [],
+    };
+  }
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} />3
-          </div>
+  async componentDidMount() {
+    const response = await api.get('products');
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
+    const data = response.data.map((product) => ({
+      // forçando o retorno de um objeto "({ })"
+      ...product, // retornando todos os dados do produto
+      priceFormatted: formatPrice(product.price), // aplicando função utilitária para formatar o preço "R$"
+    }));
 
-      <li>
-        <img
-          src="https://imageswscdn.wslojas.com.br/files/20717/MED_nike-kyrie-5-patrick-175972.png"
-          alt="Tênis"
-        />
-        <strong>Tênis</strong>
-        <span>R$129,90</span>
+    this.setState({ products: data });
+  }
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} />3
-          </div>
+  render() {
+    const { products } = this.state;
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
+    return (
+      <ProductList>
+        {products.map((product) => (
+          <li key={product.id}>
+            <img src={product.image} alt={product.title} />
+            <strong>{product.title}</strong>
+            <span>{product.priceFormatted}</span>
 
-      <li>
-        <img
-          src="https://imageswscdn.wslojas.com.br/files/20717/MED_nike-kyrie-5-patrick-175972.png"
-          alt="Tênis"
-        />
-        <strong>Tênis</strong>
-        <span>R$129,90</span>
+            <button type="button">
+              <div>
+                <MdAddShoppingCart size={16} />3
+              </div>
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} />3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://imageswscdn.wslojas.com.br/files/20717/MED_nike-kyrie-5-patrick-175972.png"
-          alt="Tênis"
-        />
-        <strong>Tênis</strong>
-        <span>R$129,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} />3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://imageswscdn.wslojas.com.br/files/20717/MED_nike-kyrie-5-patrick-175972.png"
-          alt="Tênis"
-        />
-        <strong>Tênis</strong>
-        <span>R$129,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} />3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://imageswscdn.wslojas.com.br/files/20717/MED_nike-kyrie-5-patrick-175972.png"
-          alt="Tênis"
-        />
-        <strong>Tênis</strong>
-        <span>R$129,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} />3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-    </ProductList>
-  );
+              <span>ADICIONAR AO CARRINHO</span>
+            </button>
+          </li>
+        ))}
+      </ProductList>
+    );
+  }
 }

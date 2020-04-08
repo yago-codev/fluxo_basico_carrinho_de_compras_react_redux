@@ -17,8 +17,10 @@ export const ProductList = styled.ul`
     padding: 20px;
 
     img {
-      max-width: 250px;
+      width: 250px;
+      height: 250px;
       align-self: center;
+      object-fit: contain;
     }
 
     > strong {
