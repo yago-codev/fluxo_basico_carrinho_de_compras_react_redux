@@ -1,8 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
-
   * {
     margin: 0;
     padding: 0;
@@ -10,11 +8,11 @@ export default createGlobalStyle`
     text-decoration: none;
     list-style: none;
     box-sizing: border-box;
+    color: #D3D3D3;
   }
 
   body {
-    background: #070809;
-    color: #D3D3D3;
+    background: #3C3F42;
     -webkit-font-smoothing: antialiased;
   }
 
