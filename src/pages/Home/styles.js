@@ -43,7 +43,7 @@ export const ProductList = styled.ul`
       box-shadow: inset 3px 3px 3px #af3e0a, inset -3px -3px 3px #ff6710;
       overflow: hidden;
       margin-top: auto;
-      transition: background 0.2s;
+      transition: all 0.2s;
 
       &:hover {
         background: ${darken(0.05, '#e9520d')};
