@@ -26,5 +26,6 @@ module.exports = {
       { extensions: ['.jsx', '.js'] },
     ],
     'import/prefer-default-export': 'off', // possibilita que seja utilizado o export sem obrigatoriamente declararmos o default
+    'no-console': ['error', { allow: ['tron'] }], // possibilta que possamos utilizar o console do reactotron
   },
 };
