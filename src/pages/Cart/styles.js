@@ -52,6 +52,8 @@ export const ProductTable = styled.table`
 
   img {
     height: 100px;
+    width: 100px;
+    object-fit: contain;
   }
 
   strong {
