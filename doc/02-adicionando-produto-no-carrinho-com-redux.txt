@@ -1,0 +1,257 @@
+01) A seguir iremos dispachar as actions que irão alterar o estado do Cart no Redux.
+
+    Para fazermos isso,
+    iremos acessar os arquivos que contém os componentes que irão alterar o estado do Cart no Redux.
+
+    Primeiramente,
+    acessaremos o componente da página Home,
+    pois iremos clicar no botão de adicionar o produto ao carrinho.
+
+    Esse componente precisará ser conectado ao Redux para que possamos dispachar a action até o store.
+    Para conectarmos o componente, utilizaremos uma função do Redux chamada "connect":
+
+    Importando o connect no componente Home que contém o botão do produto:
+
+    import React, { Component } from 'react';
+    import { MdAddShoppingCart } from 'react-icons/md';
+    import { connect } from 'react-redux'; <==
+
+    import { formatPrice } from '../../util/format';
+    import api from '../../services/api';
+
+    import { ProductList } from './styles'
+
+
+02) Conectando o componente Home ao Redux:
+
+    Agora que já importamos o "connect" do redux,
+    iremos remover o "export default" diretamente da classe,
+    e iremos substituir o formato de exportação pelo seguinte padrão:
+
+    export default connect()(Home); <==
+
+    Ou seja,
+    iremos utilizar o "connect" do redux para
+    conectar o componente Home.
+    A função connect() retorna outra função,
+    e dentro dessa função passaremos como parâmetro o componente que será conectado ao Redux.
+
+
+03) Dispachando a action através do evento de clique do botão do produto:
+
+    <button
+      type="button"
+      onClick={() => this.handleAddProduct(product)}
+    >
+      <div>
+        <MdAddShoppingCart size={16} />3
+      </div>
+
+      <span>ADICIONAR AO CARRINHO</span>
+    </button>
+
+
+
+04) Criando a função para adicionar o produto ao carrinho e despachando a action que irá alterar o reducer cart:
+
+    A seguir será criada a função que foi definida no evento de clique do botão do produto.
+    Essa função precisará acessar o dispatch, que será utilizado para despacharmos a action.
+
+    handleAddProduct = product => {
+      const { dispatch } = this.props;
+
+      dispatch({
+
+      });
+    }
+
+
+05) Dentro da função dispatch() nós enviaremos um objeto contendo o type da action,
+    assim como também o conteúdo que será dispachado na action:
+
+    handleAddProduct = product => {
+      const { dispatch } = this.props;
+
+      dispatch({
+        type: 'ADD_TO_CART',
+        product,
+      });
+    }
+
+
+06) Recebendo a action no reducer cart:
+
+    Dentro da função cart,
+    iremos receber os dois parâmetros que foram dispachados no evento de clique do botão (type e action).
+
+    Utilizaremos uma estrutura de controle switch para verificarmos qual é o type que foi disparado na action.
+    De acordo com o type, iremos alterar o estado do reducer.
+
+    Ou seja, sempre quando dispachamos uma action,
+    todos os reducers estarão ouvindo isso,
+    portando precisaremos utilizar o switch para verificar qual é o tipo da action disparada,
+    fazendo com que somente assim o estado seja alterado.
+
+    Além disso,
+    quando tivermos qualquer action de um tipo diferente do que foi determinado dentro do switch,
+    iremos somente retornar o estado sem alteração nenhuma.
+
+    export default function cart(state, action) {
+      switch (action.type) {
+        case 'ADD_TO_CART':
+          return [];
+        default:
+          return state;
+      }
+    }
+
+
+07) Definindo o return da action do tipo "ADD_TO_CART":
+
+    Antes de mais nada iremos setar um valor default para o state inicial:
+
+    export default function cart(state = [], action) { <==
+      switch (action.type) {
+        case 'ADD_TO_CART':
+          return [];
+        default:
+          return state;
+      }
+    }
+
+    Quando dispararmos o evento de clique no botão de adicionarmos o produto ao carrinho,
+    iremos copiar todo o conteúdo já existente no state,
+    e como segundo parâmetro iremos passar o objeto product que está vindo através da action do botão do produto:
+
+    export default function cart(state = [], action) {
+      switch (action.type) {
+        case 'ADD_TO_CART':
+          return [...state, action.product];
+        default:
+          return state;
+      }
+    }
+
+
+08) Resgatando/Acessando o estado do Reducer dentro de um componente externo:
+
+    Porque?
+    Precisaremos acessar o estado do reducer para podermos incluir
+    o produto dentro do ícone de carrinho, no header da aplicação.
+
+    Para fazermos isso,
+    inicialmente precisaremos importar o "connect" do redux e realizarmos a conexão do componente header:
+
+
+    import React from 'react';
+    import { Link } from 'react-router-dom';
+    import { MdShoppingCart } from 'react-icons/md';
+    import { connect } from 'react-redux'; <==
+
+
+    Exportando o componente através do connect:
+
+    OBS: Ao contrário do que foi feito no componente Home,
+    onde apenas conectamos o componente sem retornarmos nada do seu estado, pois isso era inútil naquele caso,
+    tendo em vista que nosso evento iria apenas adicionar o produto ao reducer cart,
+    agora precisaremos retornar o estado do reducer.
+
+    Mas como iremos retornar o estado do reducer?
+    Isso será obtido na própria função connect(),
+    que irá receber o state como parâmetro,
+    que é o estado inteiro do reducer.
+    Esse estado é uma função, onde iremos retornar um objeto com a propriedade cart,
+    acessando o state para retornar o reducer desejado "cart":
+
+    export default connect((state) => ({
+      cart: state.cart,
+    }))(Header);
+
+
+09) Após connectarmos o componente ao reducer e retornarmos os dados do estado do reducer,
+    precisaremos acessar-los dentro das props.
+
+    Como o componente Header é um componente funcional,
+    iremos recuperar as props como parâmetro da função:
+
+    function Header({ cart }) { <==
+      return (
+        <Container>
+          <Link to="/">
+            <img src={logo} alt="Shop" />
+          </Link>
+
+          <Cart to="/cart">
+            <div>
+              <strong>Meu carrinho</strong>
+              <span>3 itens</span>
+            </div>
+
+            <MdShoppingCart />
+          </Cart>
+        </Container>
+      );
+    }
+
+    export default connect((state) => ({
+      cart: state.cart, <==
+    }))(Header);
+
+
+10) Formatando o acesso ao estado do reducer para retornar somente a quantidade de produtos contida no estado.
+
+    Porque?
+    Faremos isso porque iremos precisar apenas da quantidade de produtos contidas no estado do reducer,
+    afinal de contas, exibiremos apenas o número de produtos que foi inserido dentro do carrinho dentro do componente Header.
+
+    Para retornarmos somente a quantidade de produtos do estado do reducer do cart,
+    utilizaremos o "lenght".
+
+    function Header({ cartSize }) { <==
+      return (
+        <Container>
+          <Link to="/">
+            <img src={logo} alt="Shop" />
+          </Link>
+
+          <Cart to="/cart">
+            <div>
+              <strong>Meu carrinho</strong>
+              <span>3 itens</span>
+            </div>
+
+            <MdShoppingCart />
+          </Cart>
+        </Container>
+      );
+    }
+
+    export default connect((state) => ({
+      cartSize: state.cart.length, <==
+    }))(Header);
+
+
+11) Exibindo o número de produtos dentro do Header:
+
+    function Header({ cartSize }) {
+      return (
+        <Container>
+          <Link to="/">
+            <img src={logo} alt="Shop" />
+          </Link>
+
+          <Cart to="/cart">
+            <div>
+              <strong>Meu carrinho</strong>
+              <span>{cartSize} itens</span> <==
+            </div>
+
+            <MdShoppingCart />
+          </Cart>
+        </Container>
+      );
+    }
+
+    export default connect((state) => ({
+      cartSize: state.cart.length,
+    }))(Header);
